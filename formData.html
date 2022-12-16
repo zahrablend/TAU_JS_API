@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id="myForm">
+        <div class="formBox" style="display: inline-block">
+            <input type="text" id="first" name="product">
+            <input type="text" id="last" name="price">
+            <label for="quantity">x</label>
+            <input type="text" name="quantity">
+        </div>
+        <div class="formBox">
+            <input type="text" name="line total">
+        </div>
+        <div class="formBox">
+            <button id="btnSubmit">Send</button>
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentloaded', () => {
+            document
+                .getElementById('myForm')
+                .addEventListener('submit', handleForm);
+        });
+
+        function handleForm(ev) {
+            ev.preventDefault();
+            let myForm = ev.target;
+            let fd = new FormData(myForm); //everything from form that had 'name' attr
+
+            //add data not included in the form
+            fd.append('api-key', 'myApiKey');
+
+            //look at all the contents
+            for (let key of fd.keys()) {
+                console.log(key, fd.get(key));
+            }
+
+            //send request with formdata
+            let url = 'file:///C:/Users/zahra/source/repos/TAU_JS_API/formData.html';
+            //let url = 'https://localhost:7239/';
+            let req = new Request(url, {
+                body: fd,
+                method: 'POST',
+            });
+            //file:///C:/Users/zahra/source/repos/TAU_JS_API/formData.html?product=Espresso&price=1&quantity=2&line+total=#
+            //file:///C:/Users/zahra/source/repos/TAU_JS_API/formData.html?product=Espresso&price=1&quantity=2&line+total=#
+
+            //console.log(fetch)
+            fetch(req)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log('Response from server');
+                })
+                .catch(console.warn);
+        }
+
+        function convertFD2JSON(formData) {
+            let obj = {};
+            for (let key of formData.keys()) {
+                obj[key] = formData.get(key);
+            }
+            return obj;
+        }
+
+        
+    </script>
+</body>
+</html>

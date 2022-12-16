@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="data"></div>
+    <script>
+        const orderLineJson = sessionStorage.getItem('form');
+        //const orderLineJson = localStorage.getItem('form');
+        const orderLine = JSON.parse(orderLineJson); //convert data back from json to JS object
+
+        for(key in orderLine) {
+            const markup = `
+            <div>
+                <span>${key}: ${orderLine[key]}</span>
+            </div>`;
+            document.getElementById('data').innerHTML += markup;
+        } 
+    </script>
+</body>
+</html>

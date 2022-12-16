@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <div style="display: inline-block">
+            <input type="text" name="product">
+            <input type="text" name="price">
+            <label for="quantity">x</label>
+            <input type="text" name="quantity">
+        </div>
+        <div>
+            <input type="text" name="line total">
+        </div>
+        <div>
+            <button type="submit">Save Line</button>
+        </div>
+    </form>
+
+    <script>
+        const form = document.querySelector('form');
+        //const lineTotal = value => document.querySelector('price').value * document.querySelector('quantity').value;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); //restricts page refresh on submit
+            const line = new FormData(form); //creates new data payload and saves to JS variable
+            const orderLine = Object.fromEntries(line); //new instance of object orderLine for each new entry
+            //console.log(orderLine); 
+            const orderLineJson = JSON.stringify(orderLine);
+            sessionStorage.setItem('form', orderLineJson);
+            //localStorage.setItem('form', orderLineJson);
+            window.location.href='display-receipt.html';
+            /*
+            for (item of line) {
+                console.log(item);
+            }
+            console.log(line);
+            console.log(lineTotal);
+            */
+        })
+        
+    </script>
+    </script>
+</body>
+</html>
